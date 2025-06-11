@@ -17,6 +17,13 @@
 
 // --- Global Variables ---
 
+
+let song; // Used to store loaded sound files
+let fft; // Let's make a variable to hold the FFT object
+let button; // Buttons for playing/pausing music
+const numBins = 128; // Set the number of audio analysis bands
+const smoothing = 0.8; // Set frequency analysis smoothness
+
 /**
  * @type {Array<Wheel>} wheels - An array to store all Wheel objects displayed on the canvas.
  * These are the central, circular elements of the artwork.
