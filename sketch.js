@@ -99,6 +99,13 @@ const backgroundColor = '#2A363B';
  * and to perform initial setup for the artwork.
  */
 function setup() {
+  fft = new p5.FFT(smoothing, numBins);
+  song.connect(fft); //Connecting your loaded audio to the FFT object
+  
+  button = createButton("Play/Pause"); //Create a new HTML button with the text ‘Play/Pause’ displayed on the button
+  button.position((width - button.width) / 2, height - button.height - 2); //Sets the position of the button on the canvas.
+  button.mousePressed(play_pause); //Add a ‘click event’ to this button. When the user clicks on the button, the previously defined `play_pause()` function will be executed
+  
   /**
    * Step 1: Create the Canvas.
    * `createCanvas(width, height)` sets up the drawing surface.
