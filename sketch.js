@@ -336,6 +336,15 @@ class Wheel {
      * A higher value means a faster fade-in effect.
      */
     this.fadeSpeed = 5;
+
+    this.baseRadius = radius; //Stores the initial radius, keeping a reference to the ‘original size’.
+    this.targetRadius = radius; //Target radius variables prepared for future animation smoothing
+    this.audioScale = 1; //Current scaling factor, initially 1.
+  }
+
+  updateAudioScale(spectrumValue) {
+    this.audioScale = map(spectrumValue, 0, 255, 0.8, 1.2); //The volume of a frequency band extracted from the FFT in the range 0 to 255.Maps volume values to a scaling multiplier (0.8 to 1.2), the louder the tone, the greater the multiplier.
+    this.radius = this.baseRadius * this.audioScale; //Multiply the original radius by the multiplier to update the current radius to achieve the visual effect of ‘size jumping’.
   }
 
   /**
@@ -345,6 +354,8 @@ class Wheel {
   display() {
     push(); // Save the current drawing state.
     translate(this.x, this.y); // Move the origin to the wheel's center.
+
+    scale(this.audioScale); //Scale all graphics drawn afterwards, using this.audioScale as the scale factor.
 
     // Draw layers from back to front to ensure correct visual stacking.
     this.drawBaseCircle();
