@@ -28,6 +28,14 @@ function preload() {
   song = loadSound("assets/613323__rokzroom__loop-of-life-v01.wav");
 } //Used to load media files before the program starts
 
+function play_pause() {
+  if (song.isPlaying()) {
+    song.stop();
+  } else {
+    song.loop();
+  }
+} //This is a play/pause control function
+
 /**
  * @type {Array<Wheel>} wheels - An array to store all Wheel objects displayed on the canvas.
  * These are the central, circular elements of the artwork.
