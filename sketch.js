@@ -24,6 +24,10 @@ let button; // Buttons for playing/pausing music
 const numBins = 128; // Set the number of audio analysis bands
 const smoothing = 0.8; // Set frequency analysis smoothness
 
+function preload() {
+  song = loadSound("assets/613323__rokzroom__loop-of-life-v01.wav");
+} //Used to load media files before the program starts
+
 /**
  * @type {Array<Wheel>} wheels - An array to store all Wheel objects displayed on the canvas.
  * These are the central, circular elements of the artwork.
