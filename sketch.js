@@ -105,7 +105,7 @@ function setup() {
   button = createButton("Play/Pause"); //Create a new HTML button with the text ‘Play/Pause’ displayed on the button
   button.position((width - button.width) / 2, height - button.height - 2); //Sets the position of the button on the canvas.
   button.mousePressed(play_pause); //Add a ‘click event’ to this button. When the user clicks on the button, the previously defined `play_pause()` function will be executed
-  
+
   /**
    * Step 1: Create the Canvas.
    * `createCanvas(width, height)` sets up the drawing surface.
@@ -140,28 +140,24 @@ function draw() {
    */
   background(backgroundColor);
 
-  /**
-   * Step 2: Display Connectors.
-   * Iterate through the `connectors` array and call the `display()` method
-   * for each connector. Connectors are drawn first to ensure they appear
-   * visually "behind" the wheels.
-   */
+  let spectrum = fft.analyze(); //Analysing the current music spectrum
+  
+  for (let i = 0; i < wheels.length; i++) {
+    const spectrumIndex = floor(map(i, 0, wheels.length, 0, numBins));
+    wheels[i].updateAudioScale(spectrum[spectrumIndex]);
+  } //Let the wheels bounce according to the spectrum
+  
+  // Draw connectors
   for (const conn of connectors) {
     conn.display();
   }
-
-  /**
-   * Step 3: Display Wheels and Update their Internal Pattern Alpha.
-   * Iterate through the `wheels` array.
-   * - `wheel.display()` renders the wheel's various components.
-   * - `wheel.updateAlpha()` is crucial for the fade-in effect of the
-   * wheel's internal patterns when it is restored.
-   */
+  
+  // Draw wheels
   for (const wheel of wheels) {
     wheel.display();
     wheel.updateAlpha();
   }
-
+  
   /**
    * Step 4: Update and Display Dandelion Particles.
    * Iterate through the `dandelionParticles` array in reverse.
@@ -177,10 +173,8 @@ function draw() {
     let p = dandelionParticles[i];
     p.update();
     p.display();
-    // Condition for removing particles: either they've flown away and faded out,
-    // or they've returned to the wheel and fully faded out (merged).
     if ((p.alpha <= 0 && !p.isReturning) || (p.isReturning && dist(p.x, p.y, p.targetX, p.targetY) < 1 && p.alpha <= 0)) {
-        dandelionParticles.splice(i, 1);
+      dandelionParticles.splice(i, 1);
     }
   }
 }
