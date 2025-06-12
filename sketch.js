@@ -157,26 +157,6 @@ function draw() {
     wheel.display();
     wheel.updateAlpha();
   }
-  
-  /**
-   * Step 4: Update and Display Dandelion Particles.
-   * Iterate through the `dandelionParticles` array in reverse.
-   * Iterating backward is important when removing elements from an array
-   * during iteration, as it prevents skipping elements.
-   * - `p.update()` calculates the particle's new position, size, and transparency.
-   * - `p.display()` draws the particle at its updated state.
-   * - Particles are removed from the array if their alpha becomes zero
-   * and they are either not returning (flown away and faded out) or
-   * have returned to their target and faded out. This keeps the array clean.
-   */
-  for (let i = dandelionParticles.length - 1; i >= 0; i--) {
-    let p = dandelionParticles[i];
-    p.update();
-    p.display();
-    if ((p.alpha <= 0 && !p.isReturning) || (p.isReturning && dist(p.x, p.y, p.targetX, p.targetY) < 1 && p.alpha <= 0)) {
-      dandelionParticles.splice(i, 1);
-    }
-  }
 }
 
 
